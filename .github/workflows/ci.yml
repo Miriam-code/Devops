@@ -1,5 +1,4 @@
 name: Mock Pipeline
-
 on:
   push:
     branches:
@@ -10,8 +9,8 @@ jobs:
   mock-job:
     runs-on: self-hosted
     steps:
-      - name: Create a directory
-        run: mkdir -p /Users/User11/Desktop/efrei/projets/devops/delivery-flow/mock-output
+      - name: Créer un dossier
+        run: mkdir -p ${{ github.workspace }}/mock-output
 
       - name: Hello World log
         run: echo "Hello World!"
