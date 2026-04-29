@@ -14,3 +14,6 @@ jobs:
 
       - name: Hello World log
         run: echo "Hello World!"
+      
+      - name: Afficher le workspace
+        run: echo ${{ github.workspace }}
