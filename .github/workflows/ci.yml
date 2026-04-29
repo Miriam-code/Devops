@@ -1,4 +1,5 @@
 name: Mock Pipeline
+
 on:
   push:
     branches:
@@ -9,11 +10,28 @@ jobs:
   mock-job:
     runs-on: self-hosted
     steps:
+      - name: Checkout du code
+        uses: actions/checkout@v4
+
       - name: Créer un dossier
         run: mkdir -p ${{ github.workspace }}/mock-output
 
       - name: Hello World log
         run: echo "Hello World!"
-      
-      - name: Afficher le workspace
-        run: echo ${{ github.workspace }}
+
+      - name: Terraform Init
+        run: terraform init
+        working-directory: ${{ github.workspace }}
+
+      - name: Terraform Apply
+        run: terraform apply -auto-approve
+        working-directory: ${{ github.workspace }}
+
+      - name: Afficher le fichier généré
+        run: cat ${{ github.workspace }}/ansible_inputs/inventory.yaml
+
+      - name: Upload de l'inventaire généré
+        uses: actions/upload-artifact@v4
+        with:
+          name: ansible-inventory
+          path: ${{ github.workspace }}/ansible_inputs/inventory.yaml
